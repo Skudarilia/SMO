@@ -77,10 +77,12 @@ std::pair<Skudar::Request, int> Skudar::Buffer::getRequest()
                 reqToGet = i;
                 isSelected = true;
             }
-
+                // приоритет по источнику
             if (buffers.at(i)->getSourceId() < buffers.at(reqToGet)->getSourceId()) {
                 reqToGet = i;
+                // если пришли с одного источника
             } else if (buffers.at(i)->getSourceId() == buffers.at(reqToGet)->getSourceId()) {
+                // то приоритет последней поступившей
                 if (buffers.at(i)->getRequestNumber() > buffers.at(reqToGet)->getRequestNumber()) {
                     reqToGet = i;
                 }

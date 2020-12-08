@@ -3,10 +3,7 @@
 
 const std::string Skudar::Analytics::StepModel::EMPTY = "null";
 
-Skudar::Analytics::Analytics()
-{
-
-}
+Skudar::Analytics::Analytics() {}
 
 void Skudar::Analytics::newRequestGenerate(Skudar::Request request)
 {

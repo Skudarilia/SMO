@@ -9,9 +9,9 @@ Skudar::Request::Request()
 
 Skudar::Request::Request(float timeOfWait, int sourceId, int requestNumber)
 {
-    this->timeOfWait = timeOfWait;
-    this->sourceId = sourceId;
-    this->requestNumber = requestNumber;
+    this->timeOfWait = timeOfWait; // время
+    this->sourceId = sourceId; // номер источника 
+    this->requestNumber = requestNumber; // номер заявки
 }
 
 float Skudar::Request::getTimeOfWait() const

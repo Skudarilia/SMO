@@ -29,14 +29,14 @@ bool Skudar::Device::isFreeDevice()
 }
 
 int Skudar::Device::addNewRequest(float currentTime, Skudar::Request request)
-{
+{   // экспоненциальный закон распределения времени обслуживания
     float timeToDo = currentTime + ((log(1 - ((float)qrand()/(float)RAND_MAX)))*(-1/this->lambda));
 
     for (int i = 0; i < devices.size(); i++) {
         if (cursor >= devices.size() || cursor < 0) {
             cursor = 0;
         }
-        if (devices.at(cursor) == nullptr) {
+        if (devices.at(cursor) == nullptr) { 
             devices.at(cursor) = new std::pair<float, Request>(timeToDo, Request(request.getTimeOfWait(), request.getSourceId(), request.getRequestNumber()));
             cursor++;
             return cursor;
@@ -54,7 +54,7 @@ std::list<std::pair<Skudar::Request, int> > Skudar::Device::freeDoneDevices(floa
 
     for (int i = 0; i < devices.size(); i++) {
         if (devices.at(i) != nullptr) {
-            if ((*devices.at(i)).first < currentTime) {
+            if ((*devices.at(i)).first < currentTime) { // Прибор отработал
                 tmpList.push_back(std::make_pair(
                                       Request(
                                           (*devices.at(i)).first,
@@ -62,16 +62,16 @@ std::list<std::pair<Skudar::Request, int> > Skudar::Device::freeDoneDevices(floa
                                           (*devices.at(i)).second.getRequestNumber()
                                           ),
                                       i + 1));
-                devicesTmp.push_back(nullptr);
+                devicesTmp.push_back(nullptr); // Прибор свободный
             } else {
-                devicesTmp.push_back(devices.at(i));
+                devicesTmp.push_back(devices.at(i)); // Прибор занят
             }
         } else {
-            devicesTmp.push_back(nullptr);
+            devicesTmp.push_back(nullptr); // Прибор свободный
         }
     }
 
-    devices = devicesTmp;
+    devices = devicesTmp; // обновленный список приборов с заявками
 
-    return tmpList;
+    return tmpList; // возвращаем отработанные заявки
 }
